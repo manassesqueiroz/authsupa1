@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { SignInWithOAuth } from '@/components/OauthButton'
 
 export default function Login({
   searchParams,
@@ -75,8 +76,19 @@ export default function Login({
         Back
       </Link>
 
+      <SignInWithOAuth provider={'facebook'}>
+          <span className='flex p-2 rounded-lg bg-blue-500 text-white'> Login With Facebook</span>
+      </SignInWithOAuth>
+
+      <SignInWithOAuth provider={'github'}>
+          <span className='flex p-2 rounded-lg bg-gray-600 text-white'> Login With Github</span>
+      </SignInWithOAuth>
+
+      <SignInWithOAuth provider={'discord'}>
+          <span className='flex p-2 rounded-lg bg-blue-900 text-white'> Login With discord</span>
+      </SignInWithOAuth>
       <form
-        className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+        className="animate-in flex flex-col w-full justify-center gap-2 text-foreground"
         action={signIn}
       >
         <label className="text-md" htmlFor="email">
@@ -113,6 +125,7 @@ export default function Login({
           </p>
         )}
       </form>
+     
     </div>
   )
 }
