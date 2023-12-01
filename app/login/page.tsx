@@ -1,21 +1,29 @@
 import Link from 'next/link'
-import { headers, cookies } from 'next/headers'
+import { headers } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { SignInWithOAuth } from '@/components/OauthButton'
+import readUserSession from '../../app/lib/actions/getSession'
 
-export default function Login({
+
+
+export default async function Login({
   searchParams,
 }: {
   searchParams: { message: string }
 }) {
+  const { data } = await readUserSession()
+
+  if (data.session) {
+    return redirect("/dashboard")
+  }
+  
   const signIn = async (formData: FormData) => {
     'use server'
 
     const email = formData.get('email') as string
     const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const supabase = createClient()
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -35,8 +43,7 @@ export default function Login({
     const origin = headers().get('origin')
     const email = formData.get('email') as string
     const password = formData.get('password') as string
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const supabase = createClient()
 
     const { error } = await supabase.auth.signUp({
       email,
