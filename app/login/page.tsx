@@ -83,6 +83,10 @@ export default async function Login({
         Back
       </Link>
 
+      <SignInWithOAuth provider={'google'}>
+          <span className='flex p-2 rounded-lg bg-white text-black'> Login With Google</span>
+      </SignInWithOAuth>
+
       <SignInWithOAuth provider={'facebook'}>
           <span className='flex p-2 rounded-lg bg-blue-500 text-white'> Login With Facebook</span>
       </SignInWithOAuth>
