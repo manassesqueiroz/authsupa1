@@ -1,13 +1,13 @@
 import { redirect } from "next/navigation"
-import readUserSession from "../lib/actions/getSession"
+import { User } from "../lib/data"
 
-export default async function Page() {
-  const { data } = await readUserSession()
-
-  if (!data.session) {
-    return redirect("/login")
+export default async function Page() {  
+  const user = await User()
+  if(!user){
+    redirect('/login')
   }
+  console.log(user)
   return (
-  <div>HELLO</div>
+    <pre>{JSON.stringify(user, null, 2 )}</pre>
   )
 } 

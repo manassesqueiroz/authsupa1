@@ -12,9 +12,9 @@ export default async function Login({
 }: {
   searchParams: { message: string }
 }) {
-  const { data } = await readUserSession()
+  const user = await readUserSession()
 
-  if (data.session) {
+  if (user) {
     return redirect("/dashboard")
   }
   
@@ -98,6 +98,7 @@ export default async function Login({
       <SignInWithOAuth provider={'discord'}>
           <span className='flex p-2 rounded-lg bg-blue-900 text-white'> Login With discord</span>
       </SignInWithOAuth>
+      
       <form
         className="animate-in flex flex-col w-full justify-center gap-2 text-foreground"
         action={signIn}
